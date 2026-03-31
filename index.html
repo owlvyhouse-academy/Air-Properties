@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>อากาศมีตัวตน.. จริงหรือ? 🌬️</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700;900&family=Mitr:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Kanit', sans-serif;
+  background: #0a0a1a;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ─── STICKY NAV ─── */
+.sticky-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: rgba(10,10,26,0.88);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 22px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-family: 'Kanit', sans-serif;
+  border: none;
+  white-space: nowrap;
+}
+
+.nav-pill.h-pill {
+  background: linear-gradient(135deg, #FF6B35, #FFD700);
+  color: #1a0800;
+  box-shadow: 0 4px 18px rgba(255,107,53,0.45);
+}
+
+.nav-pill.v-pill {
+  background: linear-gradient(135deg, #0d2a6e, #00E5FF);
+  color: white;
+  box-shadow: 0 4px 18px rgba(0,150,255,0.35);
+}
+
+.nav-pill:hover { transform: translateY(-2px) scale(1.03); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 20px 80px;
+  position: relative;
+  background:
+    radial-gradient(ellipse 80% 55% at 18% 28%, rgba(255,107,53,0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 65% 75% at 82% 72%, rgba(0,180,255,0.14) 0%, transparent 65%),
+    #0a0a1a;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: 'Mitr', sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 18px;
+}
+
+.hero-icon {
+  font-size: 80px;
+  display: block;
+  margin-bottom: 14px;
+  animation: float-icon 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 28px rgba(255,200,0,0.5));
+}
+
+.hero-title {
+  font-size: clamp(40px, 9vw, 90px);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, #FFD700 0%, #FF6B35 38%, #FF4D94 68%, #00E5FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-family: 'Mitr', sans-serif;
+  font-size: clamp(15px, 2.8vw, 20px);
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 52px;
+  max-width: 540px;
+  line-height: 1.7;
+}
+
+.hero-cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 700px;
+}
+
+.hero-card-link {
+  flex: 1;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 26px 28px;
+  border-radius: 22px;
+  text-decoration: none;
+  transition: transform 0.25s, box-shadow 0.25s;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.hero-card-link.hlink {
+  background: linear-gradient(140deg, rgba(255,107,53,0.25), rgba(255,215,0,0.12));
+  box-shadow: 0 8px 32px rgba(255,107,53,0.2);
+}
+
+.hero-card-link.vlink {
+  background: linear-gradient(140deg, rgba(13,42,110,0.5), rgba(0,229,255,0.1));
+  box-shadow: 0 8px 32px rgba(0,150,255,0.18);
+}
+
+.hero-card-link:hover { transform: translateY(-6px); }
+
+.hc-badge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.hlink .hc-badge { background: rgba(255,215,0,0.2); color: #FFD700; border: 1px solid rgba(255,215,0,0.35); }
+.vlink .hc-badge { background: rgba(0,229,255,0.15); color: #00E5FF; border: 1px solid rgba(0,229,255,0.3); }
+
+.hc-title { font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 6px; }
+
+.hc-desc {
+  font-family: 'Mitr', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+}
+
+.hc-count {
+  margin-top: 18px;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.3);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255,255,255,0.25);
+  font-family: 'Mitr', sans-serif;
+  font-size: 11px;
+  animation: bounce-hint 2.2s ease-in-out infinite;
+}
+
+.scroll-hint .arr { font-size: 18px; }
+
+/* ─── SERIES SECTIONS ─── */
+.series-section { padding: 0; }
+
+.series-header {
+  position: relative;
+  padding: 80px 20px 56px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.h-section .series-header {
+  background:
+    radial-gradient(ellipse 100% 90% at 50% 0%, rgba(255,107,53,0.28) 0%, transparent 70%),
+    linear-gradient(180deg, #180900 0%, #0a0a1a 100%);
+}
+
+.v-section .series-header {
+  background:
+    radial-gradient(ellipse 100% 90% at 50% 0%, rgba(0,80,200,0.35) 0%, transparent 70%),
+    linear-gradient(180deg, #030c20 0%, #0a0a1a 100%);
+}
+
+.series-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.h-section .series-tag { background: rgba(255,215,0,0.12); border: 1px solid rgba(255,215,0,0.35); color: #FFD700; }
+.v-section .series-tag { background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.3); color: #00E5FF; }
+
+.series-title {
+  font-size: clamp(28px, 5.5vw, 50px);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.h-section .series-title { color: #FFD700; }
+.v-section .series-title { color: #00E5FF; }
+
+.series-desc {
+  font-family: 'Mitr', sans-serif;
+  font-size: clamp(14px, 2.3vw, 17px);
+  color: rgba(255,255,255,0.55);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ─── CARDS ─── */
+.cards-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+.info-card {
+  border-radius: 22px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateY(46px);
+  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(.22,1,.36,1);
+}
+
+.info-card.revealed { opacity: 1; transform: translateY(0); }
+
+/* H-cards */
+.h-section .info-card {
+  background: linear-gradient(160deg, #1c0c04, #110700);
+  border: 1px solid rgba(255,140,50,0.14);
+  box-shadow: 0 6px 32px rgba(255,100,30,0.1);
+}
+
+/* V-cards */
+.v-section .info-card {
+  background: linear-gradient(160deg, #040c1e, #020810);
+  border: 1px solid rgba(0,120,220,0.18);
+  box-shadow: 0 6px 32px rgba(0,80,200,0.1);
+}
+
+/* Per-page v-card accent colors */
+.v-card-1 { border-color: rgba(255,215,0,0.2) !important; }
+.v-card-2 { border-color: rgba(0,210,100,0.2) !important; }
+.v-card-3 { border-color: rgba(50,170,255,0.22) !important; }
+.v-card-4 { border-color: rgba(180,80,255,0.2) !important; }
+.v-card-5 { border-color: rgba(255,140,40,0.22) !important; }
+.v-card-6 { border-color: rgba(0,230,255,0.2) !important; }
+.v-card-7 { border-color: rgba(180,140,110,0.25) !important; }
+
+/* Top bar */
+.card-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+}
+
+.h-section .card-topbar { background: rgba(255,100,30,0.12); border-bottom: 1px solid rgba(255,200,0,0.1); }
+.v-section .card-topbar { background: rgba(0,50,110,0.35); border-bottom: 1px solid rgba(0,200,255,0.08); }
+
+.card-pg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
+}
+
+.pg-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.h-section .pg-dot { background: #FFD700; box-shadow: 0 0 8px #FFD700; }
+
+.v-card-1 .pg-dot { background: #FFD700; box-shadow: 0 0 8px #FFD700; }
+.v-card-2 .pg-dot { background: #00E676; box-shadow: 0 0 8px #00E676; }
+.v-card-3 .pg-dot { background: #40C4FF; box-shadow: 0 0 8px #40C4FF; }
+.v-card-4 .pg-dot { background: #CE93D8; box-shadow: 0 0 8px #CE93D8; }
+.v-card-5 .pg-dot { background: #FFAB40; box-shadow: 0 0 8px #FFAB40; }
+.v-card-6 .pg-dot { background: #00E5FF; box-shadow: 0 0 8px #00E5FF; }
+.v-card-7 .pg-dot { background: #BCAAA4; box-shadow: 0 0 8px #BCAAA4; }
+
+.pg-label {
+  font-family: 'Mitr', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 1px;
+}
+
+.topic-tag {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 999px;
+}
+
+.h-section .topic-tag {
+  background: rgba(255,215,0,0.1);
+  color: #FFD700;
+  border: 1px solid rgba(255,215,0,0.28);
+}
+
+.v-card-1 .topic-tag { background: rgba(255,215,0,0.08); color: #FFD700; border: 1px solid rgba(255,215,0,0.25); }
+.v-card-2 .topic-tag { background: rgba(0,230,118,0.08); color: #00E676; border: 1px solid rgba(0,230,118,0.25); }
+.v-card-3 .topic-tag { background: rgba(64,196,255,0.08); color: #40C4FF; border: 1px solid rgba(64,196,255,0.25); }
+.v-card-4 .topic-tag { background: rgba(206,147,216,0.08); color: #CE93D8; border: 1px solid rgba(206,147,216,0.25); }
+.v-card-5 .topic-tag { background: rgba(255,171,64,0.08); color: #FFAB40; border: 1px solid rgba(255,171,64,0.25); }
+.v-card-6 .topic-tag { background: rgba(0,229,255,0.08); color: #00E5FF; border: 1px solid rgba(0,229,255,0.25); }
+.v-card-7 .topic-tag { background: rgba(188,170,164,0.08); color: #BCAAA4; border: 1px solid rgba(188,170,164,0.25); }
+
+/* Image */
+.card-img-area { position: relative; background: rgba(0,0,0,0.25); width: 100%; }
+
+.card-img-area img { width: 100%; display: block; object-fit: cover; }
+
+.img-ph {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 50px 20px;
+  min-height: 240px;
+}
+
+.img-ph.show { display: flex; }
+.img-ph-icon { font-size: 50px; }
+.img-ph-name { font-size: 17px; font-weight: 700; color: rgba(255,255,255,0.75); text-align: center; }
+.img-ph-file { font-family: monospace; font-size: 12px; padding: 4px 14px; border-radius: 8px; background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.4); }
+
+/* Body */
+.card-body { padding: 18px 22px 22px; }
+
+.card-title {
+  font-size: clamp(17px, 3.2vw, 22px);
+  font-weight: 900;
+  line-height: 1.25;
+  margin-bottom: 7px;
+}
+
+.h-section .card-title { color: #FFD700; }
+.v-card-1 .card-title { color: #FFD700; }
+.v-card-2 .card-title { color: #00E676; }
+.v-card-3 .card-title { color: #40C4FF; }
+.v-card-4 .card-title { color: #CE93D8; }
+.v-card-5 .card-title { color: #FFAB40; }
+.v-card-6 .card-title { color: #00E5FF; }
+.v-card-7 .card-title { color: #BCAAA4; }
+
+.card-desc {
+  font-family: 'Mitr', sans-serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.58);
+  line-height: 1.75;
+}
+
+/* ─── CONNECTOR ─── */
+.connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.conn-line { width: 2px; height: 20px; border-radius: 1px; }
+.h-section .conn-line { background: linear-gradient(to bottom, rgba(255,215,0,0.5), rgba(255,215,0,0.05)); }
+.v-section .conn-line { background: linear-gradient(to bottom, rgba(0,229,255,0.4), rgba(0,229,255,0.05)); }
+
+.conn-dot { width: 10px; height: 10px; border-radius: 50%; animation: pulse-dot 2s ease-in-out infinite; }
+.h-section .conn-dot { background: #FFD700; box-shadow: 0 0 10px rgba(255,215,0,0.7); }
+.v-section .conn-dot { background: #00E5FF; box-shadow: 0 0 10px rgba(0,229,255,0.6); }
+
+/* ─── DIVIDER ─── */
+.series-divider {
+  text-align: center;
+  padding: 56px 20px;
+  position: relative;
+}
+
+.series-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 8%; right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+}
+
+.divider-chip {
+  display: inline-block;
+  background: #0a0a1a;
+  padding: 8px 26px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.1);
+  font-family: 'Mitr', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 2px;
+  position: relative;
+}
+
+/* ─── FOOTER ─── */
+.site-footer {
+  text-align: center;
+  padding: 36px 20px 64px;
+}
+
+.footer-box {
+  display: inline-block;
+  padding: 22px 40px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.025);
+}
+
+.footer-emoji { font-size: 34px; display: block; margin-bottom: 8px; }
+.footer-title { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.75); }
+.footer-sub { font-family: 'Mitr', sans-serif; font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 4px; }
+
+/* ─── KEYFRAMES ─── */
+@keyframes float-icon {
+  0%,100% { transform: translateY(0) rotate(-3deg); }
+  50%      { transform: translateY(-14px) rotate(3deg); }
+}
+@keyframes bounce-hint {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(9px); }
+}
+@keyframes pulse-dot {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.55); opacity: 0.55; }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 580px) {
+  .sticky-nav { gap: 8px; padding: 9px 12px; }
+  .nav-pill { font-size: 12px; padding: 7px 13px; }
+  .hero-cards { flex-direction: column; }
+  .hero-card-link { min-width: unset; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="sticky-nav">
+  <a href="#h-series" class="nav-pill h-pill">🌅 Horizontal Series</a>
+  <a href="#v-series" class="nav-pill v-pill">🚀 Vertical Series</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <p class="hero-eyebrow">วิทยาศาสตร์ · ประถม · Infographic</p>
+  <span class="hero-icon">🌬️</span>
+  <h1 class="hero-title">อากาศมีตัวตน<br>จริงหรือ?</h1>
+  <p class="hero-sub">ค้นพบความลับของอากาศที่มองไม่เห็น ผ่าน 2 ชุด Infographic ที่เต็มไปด้วยความรู้และความสนุก!</p>
+
+  <div class="hero-cards">
+    <a href="#h-series" class="hero-card-link hlink">
+      <span class="hc-badge">🌅 Series 1</span>
+      <div class="hc-title">Horizontal Series</div>
+      <div class="hc-desc">ความรู้พื้นฐานเรื่องอากาศ<br>เข้าใจง่าย เหมาะสำหรับทุกคน</div>
+      <div class="hc-count">6 หน้า · ภาพแนวนอน</div>
+    </a>
+    <a href="#v-series" class="hero-card-link vlink">
+      <span class="hc-badge">🚀 Series 2</span>
+      <div class="hc-title">Vertical Series</div>
+      <div class="hc-desc">รายละเอียดเชิงลึก + Bernoulli<br>สำหรับผู้เรียนที่อยากรู้มากกว่าเดิม</div>
+      <div class="hc-count">7 หน้า · ภาพแนวตั้ง</div>
+    </a>
+  </div>
+
+  <div class="scroll-hint">
+    <span class="arr">↓</span>
+    <span>เลื่อนลงเพื่อดู</span>
+  </div>
+</section>
+
+<!-- ═══ HORIZONTAL SERIES ═══ -->
+<section class="series-section h-section" id="h-series">
+  <div class="series-header">
+    <div class="series-tag">🌅 Series 1 · Horizontal</div>
+    <h2 class="series-title">อากาศมีตัวตน.. จริงหรือ?</h2>
+    <p class="series-desc">ชุดความรู้พื้นฐานเรื่องอากาศ เข้าใจง่าย เหมาะสำหรับน้องๆ ที่เพิ่งเริ่มต้น</p>
+  </div>
+
+  <div class="cards-wrap">
+
+    <!-- PAGE 0 -->
+    <div class="info-card" data-index="0">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 0<span class="pg-label">ปก</span></div>
+        <span class="topic-tag">🎯 หน้าปก</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/himg00.png" alt="ปก"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">🌬️</span>
+          <span class="img-ph-name">ปก — อากาศมีตัวตนจริงหรือ?</span>
+          <span class="img-ph-file">images/himg00.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">อากาศมีตัวตน.. จริงหรือ?</div>
+        <div class="card-desc">หน้าปกชุด Horizontal Series เชิญชวนให้ตั้งคำถามและเริ่มการเรียนรู้</div>
+      </div>
+    </div>
+
+    <div class="connector h-section"><div class="conn-line"></div><div class="conn-dot"></div><div class="conn-line"></div></div>
+
+    <!-- PAGE 1 -->
+    <div class="info-card" data-index="1">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 1<span class="pg-label">ปริมาตร</span></div>
+        <span class="topic-tag">📦 มีปริมาตร</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/himg01.png" alt="อากาศมีปริมาตร"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">📦</span>
+          <span class="img-ph-name">มีปริมาตร (และต้องการที่อยู่)</span>
+          <span class="img-ph-file">images/himg01.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">มีปริมาตร (และต้องการที่อยู่)</div>
+        <div class="card-desc">อากาศไม่ใช่ความว่างเปล่า — มันครอบครองพื้นที่จริงๆ เหมือนสิ่งของทุกชนิด</div>
+      </div>
+    </div>
+
+    <div class="connector h-section"><div class="conn-line"></div><div class="conn-dot"></div><div class="conn-line"></div></div>
+
+    <!-- PAGE 2 -->
+    <div class="info-card" data-index="2">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 2<span class="pg-label">มวล + แรงดัน</span></div>
+        <span class="topic-tag">⚖️ มวล · 💨 แรงดัน</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/himg02.png" alt="อากาศมีมวลและแรงดัน"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">⚖️</span>
+          <span class="img-ph-name">มีมวล + มีแรงดัน</span>
+          <span class="img-ph-file">images/himg02.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">มีมวล + มีแรงดัน</div>
+        <div class="card-desc">อากาศมีน้ำหนักและออกแรงดันได้รอบทิศทาง พิสูจน์ได้ด้วยการทดลองง่ายๆ</div>
+      </div>
+    </div>
+
+    <div class="connector h-section"><div class="conn-line"></div><div class="conn-dot"></div><div class="conn-line"></div></div>
+
+    <!-- PAGE 3 -->
+    <div class="info-card" data-index="3">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 3<span class="pg-label">อัดตัว + ไหล</span></div>
+        <span class="topic-tag">🔄 อัดตัว · 🌊 ไหลได้</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/himg03.png" alt="อากาศอัดตัวและไหลได้"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">🔄</span>
+          <span class="img-ph-name">อัดตัวและขยายตัวได้ + ไหลได้</span>
+          <span class="img-ph-file">images/himg03.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">อัดตัวและขยายตัวได้ + ไหลได้</div>
+        <div class="card-desc">อากาศยืดหยุ่น บีบอัดได้ ขยายได้ และไหลจากความดันสูงไปต่ำเสมอ</div>
+      </div>
+    </div>
+
+    <div class="connector h-section"><div class="conn-line"></div><div class="conn-dot"></div><div class="conn-line"></div></div>
+
+    <!-- PAGE 4 -->
+    <div class="info-card" data-index="4">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 4<span class="pg-label">รับรู้ทางอ้อม</span></div>
+        <span class="topic-tag">👁️ การรับรู้</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/himg04.png" alt="รับรู้อากาศทางอ้อม"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">👁️</span>
+          <span class="img-ph-name">รับรู้ได้ทางอ้อม</span>
+          <span class="img-ph-file">images/himg04.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">รับรู้ได้ทางอ้อม</div>
+        <div class="card-desc">แม้มองไม่เห็น แต่เราสัมผัสและเห็นผลของอากาศได้ตลอดเวลารอบตัว</div>
+      </div>
+    </div>
+
+    <div class="connector h-section"><div class="conn-line"></div><div class="conn-dot"></div><div class="conn-line"></div></div>
+
+    <!-- PAGE 5 -->
+    <div class="info-card" data-index="5">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 5<span class="pg-label">ประยุกต์ใช้</span></div>
+        <span class="topic-tag">🏠 ชีวิตประจำวัน</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/himg05.png" alt="อากาศกับการประยุกต์ใช้"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">🏠</span>
+          <span class="img-ph-name">อากาศกับการประยุกต์ใช้ในชีวิตประจำวัน</span>
+          <span class="img-ph-file">images/himg05.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">อากาศกับการประยุกต์ใช้ในชีวิตประจำวัน</div>
+        <div class="card-desc">จากยางรถ ลูกโป่ง ไปจนถึงเครื่องบิน — อากาศอยู่ในทุกสิ่งที่เราใช้ทุกวัน</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="series-divider">
+  <span class="divider-chip">✦ &nbsp; Vertical Series ด้านล่าง &nbsp; ✦</span>
+</div>
+
+<!-- ═══ VERTICAL SERIES ═══ -->
+<section class="series-section v-section" id="v-series">
+  <div class="series-header">
+    <div class="series-tag">🚀 Series 2 · Vertical</div>
+    <h2 class="series-title">ทำไมลมเร็ว…<br>จึงทำให้เครื่องบินลอยได้?</h2>
+    <p class="series-desc">เจาะลึกคุณสมบัติของอากาศและหลักการ Bernoulli สำหรับผู้เรียนที่อยากรู้มากกว่าเดิม</p>
+  </div>
+
+  <div class="cards-wrap">
+
+    <!-- vimg01 -->
+    <div class="info-card v-card-1" data-index="0">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 1<span class="pg-label">ปก</span></div>
+        <span class="topic-tag">🟡 ปก</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/vimg01.png" alt="ปก Vertical Series"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">✈️</span>
+          <span class="img-ph-name">ปก — ทำไมลมเร็ว จึงทำให้เครื่องบินลอยได้?</span>
+          <span class="img-ph-file">images/vimg01.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">ทำไมลมเร็ว… จึงทำให้เครื่องบินลอยได้?</div>
+        <div class="card-desc">หน้าปกชุด Vertical Series ดึงดูดความสนใจและชวนให้ตั้งคำถามตั้งแต่แรกพบ</div>
+      </div>
+    </div>
+
+    <div class="connector v-section"><div class="conn-line"></div><div class="conn-dot"></div><div class="conn-line"></div></div>
+
+    <!-- vimg02 -->
+    <div class="info-card v-card-2" data-index="1">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 2<span class="pg-label">ปริมาตร</span></div>
+        <span class="topic-tag">🟢 ปริมาตร</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/vimg02.png" alt="อากาศมีปริมาตร"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">📐</span>
+          <span class="img-ph-name">อากาศมีปริมาตร</span>
+          <span class="img-ph-file">images/vimg02.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">อากาศมีปริมาตร</div>
+        <div class="card-desc">อธิบายเชิงลึกว่าอากาศครอบครองพื้นที่อย่างไร และวัดปริมาตรได้อย่างไรในทางวิทยาศาสตร์</div>
+      </div>
+    </div>
+
+    <div class="connector v-section"><div class="conn-line"></div><div class="conn-dot"></div><div class="conn-line"></div></div>
+
+    <!-- vimg03 -->
+    <div class="info-card v-card-3" data-index="2">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 3<span class="pg-label">มวล</span></div>
+        <span class="topic-tag">🔵 มวล</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/vimg03.png" alt="อากาศมีมวล"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">⚖️</span>
+          <span class="img-ph-name">อากาศมีมวล</span>
+          <span class="img-ph-file">images/vimg03.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">อากาศมีมวล</div>
+        <div class="card-desc">ทำความเข้าใจมวลของอากาศ ความหนาแน่น และความสัมพันธ์กับน้ำหนักที่วัดได้จริง</div>
+      </div>
+    </div>
+
+    <div class="connector v-section"><div class="conn-line"></div><div class="conn-dot"></div><div class="conn-line"></div></div>
+
+    <!-- vimg04 -->
+    <div class="info-card v-card-4" data-index="3">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 4<span class="pg-label">แรงดัน</span></div>
+        <span class="topic-tag">🟣 แรงดัน</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/vimg04.png" alt="อากาศมีแรงดัน"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">💪</span>
+          <span class="img-ph-name">อากาศมีแรงดัน</span>
+          <span class="img-ph-file">images/vimg04.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">อากาศมีแรงดัน</div>
+        <div class="card-desc">แรงดันอากาศทำงานอย่างไร และส่งผลต่อสิ่งต่างๆ รอบตัวเราอย่างไรบ้าง</div>
+      </div>
+    </div>
+
+    <div class="connector v-section"><div class="conn-line"></div><div class="conn-dot"></div><div class="conn-line"></div></div>
+
+    <!-- vimg05 -->
+    <div class="info-card v-card-5" data-index="4">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 5<span class="pg-label">บีบอัดได้</span></div>
+        <span class="topic-tag">🟠 บีบอัด</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/vimg05.png" alt="อากาศบีบอัดได้"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">🔧</span>
+          <span class="img-ph-name">อากาศบีบอัดได้</span>
+          <span class="img-ph-file">images/vimg05.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">อากาศบีบอัดได้</div>
+        <div class="card-desc">สมบัติการบีบอัดของอากาศและการนำไปประยุกต์ใช้ในเทคโนโลยีต่างๆ เช่น ลมยาง คอมเพรสเซอร์</div>
+      </div>
+    </div>
+
+    <div class="connector v-section"><div class="conn-line"></div><div class="conn-dot"></div><div class="conn-line"></div></div>
+
+    <!-- vimg06 -->
+    <div class="info-card v-card-6" data-index="5">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 6<span class="pg-label">ไหลได้</span></div>
+        <span class="topic-tag">🔷 การไหล</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/vimg06.png" alt="อากาศไหลได้"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">🌊</span>
+          <span class="img-ph-name">อากาศไหลได้</span>
+          <span class="img-ph-file">images/vimg06.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">อากาศไหลได้</div>
+        <div class="card-desc">อากาศไหลจากความดันสูงไปต่ำเหมือนน้ำ — นี่คือต้นกำเนิดของลมและการเคลื่อนที่ของอากาศ</div>
+      </div>
+    </div>
+
+    <div class="connector v-section"><div class="conn-line"></div><div class="conn-dot"></div><div class="conn-line"></div></div>
+
+    <!-- vimg07: Bernoulli -->
+    <div class="info-card v-card-7" data-index="6">
+      <div class="card-topbar">
+        <div class="card-pg"><div class="pg-dot"></div>PAGE 7<span class="pg-label">Bernoulli</span></div>
+        <span class="topic-tag">🟤 Bernoulli</span>
+      </div>
+      <div class="card-img-area">
+        <img src="images/vimg07.png" alt="หลักการ Bernoulli"
+          onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="img-ph">
+          <span class="img-ph-icon">✈️</span>
+          <span class="img-ph-name">หลักการ Bernoulli</span>
+          <span class="img-ph-file">images/vimg07.png</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">หลักการ Bernoulli</div>
+        <div class="card-desc">ลมเร็ว = ความดันต่ำ คือคำตอบว่าทำไมเครื่องบินถึงลอยได้ และเกิดอะไรขึ้นกับปีกอากาศยาน</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-box">
+    <span class="footer-emoji">🔬</span>
+    <div class="footer-title">วิทยาศาสตร์สนุก · อากาศมีตัวตน</div>
+    <div class="footer-sub">เรียนรู้ · สังเกต · ทดลอง · ค้นพบ</div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const d = +(e.target.dataset.index || 0) * 90;
+      setTimeout(() => e.target.classList.add('revealed'), d);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.info-card').forEach(c => observer.observe(c));
+</script>
+</body>
+</html>
